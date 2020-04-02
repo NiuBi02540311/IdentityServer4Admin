@@ -7,6 +7,8 @@ using IdentityModel.Internal;
 using IdentityModel.Jwk;
 using System.IdentityModel.Tokens.Jwt;
 using IdentityServer4Admin;
+using Microsoft.AspNetCore.Mvc;
+using UserApiService.Services;
 
 namespace UserApiService
 {
@@ -91,6 +93,13 @@ namespace UserApiService
                options.RequireHttpsMetadata = false;           //不需要https    
                options.ApiName = OAuthConfig.UserApi.ApiName;  //api的name，需要和config的名称相同
            });
+
+            //全局拦截
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(ApiAuthorizeAttribute)); // 全局过滤器
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             //services.AddMvc();
             //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 

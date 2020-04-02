@@ -30,12 +30,29 @@ namespace IdentityServer4Admin
                ClientId =OAuthConfig.UserApi.ClientId,
                AllowedGrantTypes = new List<string>()
                {
-                   GrantTypes.ResourceOwnerPassword.FirstOrDefault(),//Resource Owner Password模式
+                   GrantTypes.ResourceOwnerPassword.FirstOrDefault(),//Resource Owner Password模式 密码模式
                },
                ClientSecrets = {new Secret(OAuthConfig.UserApi.Secret.Sha256()) },
-               AllowedScopes= {OAuthConfig.UserApi.ApiName},
+               AllowedScopes= {OAuthConfig.UserApi.ApiName}, // 允许访问的资源， 这里定义的是 user_api
                AccessTokenLifetime = OAuthConfig.ExpireIn,
            },
+              new Client()
+                {
+                    ClientId = "client",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,  //设置模式，客户端模式
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedScopes = { "api1" }
+                },
+                new Client()
+                {
+                    ClientId="pwdClient",
+                    AllowedGrantTypes=GrantTypes.ResourceOwnerPassword, //密码模式
+                    ClientSecrets= {new Secret("secret".Sha256()) },
+                    AllowedScopes= { "api1" }
+                }
       };
         }
 
@@ -73,7 +90,7 @@ namespace IdentityServer4Admin
 
             public static string ClientId = "user_clientid";
 
-            public static string Secret = "user_secret";
+            public static string Secret = "user_secret"; // 这个是秘钥
         }
     }
 }

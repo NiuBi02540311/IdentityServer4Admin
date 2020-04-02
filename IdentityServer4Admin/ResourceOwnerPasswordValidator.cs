@@ -25,7 +25,9 @@ namespace IdentityServer4Admin
                 (
                     subject: userName,
                     authenticationMethod: "custom",
-                    claims: claimList.ToArray()
+                    claims: claimList.ToArray(),
+                    identityProvider:"Jack",
+                    customResponse: CustomResponse()
                  );
             }
             catch (Exception ex)
@@ -40,6 +42,27 @@ namespace IdentityServer4Admin
         }
 
         #region Private Method
+
+        private Dictionary<string, object> CustomResponse() {
+
+            //Dictionary<string, object> dic = new Dictionary<string, object>();
+
+            //dic.Add("returnUrl", "www.baidu.com");
+
+
+            //载荷（payload）
+            var payload = new Dictionary<string, object>
+            {
+                { "ReturnUrl","www.baidu.com"},//发行人
+                { "iss","流月无双"},//发行人
+                { "exp", DateTimeOffset.UtcNow.AddSeconds(10).ToUnixTimeSeconds() },//到期时间
+                { "sub", "testJWT" }, //主题
+                { "aud", "USER" }, //用户
+                { "iat", DateTime.Now.ToString() }, //发布时间 
+                { "data" ,new { name="111",age=11,address="hubei"} }
+            };
+            return payload;
+        }
         /// <summary>
         /// 验证用户
         /// </summary>
@@ -56,9 +79,18 @@ namespace IdentityServer4Admin
                 // throw new Exception("登录失败，用户名和密码不正确");
                 return null;
 
+            //var clamis = new List<Claim>();
+            //clamis.Add(new Claim(ClaimTypes.Name, "Alun"));
+            //clamis.Add(new Claim(ClaimTypes.Role, "Users"));
+            //var identity = new ClaimsIdentity(clamis, "MyLogin");
+
+            //ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+
             return new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Name, $"{loginName}"),
+                    new Claim(ClaimTypes.Name, $"{loginName}")
+                    //new Claim("returnUrl", $"wwww.baidu.com"),
                 };
         }
         #endregion
