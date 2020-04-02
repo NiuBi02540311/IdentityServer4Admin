@@ -12,6 +12,7 @@ namespace IdentityServer4Admin
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
             try
+            // http://localhost:5000/connect/token
             {
                 var userName = context.UserName;
                 var password = context.Password;
