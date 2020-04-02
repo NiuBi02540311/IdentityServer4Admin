@@ -17,8 +17,8 @@ namespace IdentityServer4Admin
         //https://mp.weixin.qq.com/s/3CCyvn2FUHtchIx8xhJHrw
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
+            //services.AddControllers();
+            services.AddControllersWithViews();
             #region �ڴ淽ʽ
             //services.AddIdentityServer()
             //    .AddDeveloperSigningCredential()
@@ -61,12 +61,20 @@ namespace IdentityServer4Admin
 
             app.UseAuthorization();
 
+            app.UseStaticFiles();
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapGet("/", async context =>
+            //    {
+            //        await context.Response.WriteAsync("Hello World!");
+            //    });
+            //});
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Login}/{action=login}/{id?}");
             });
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UserApiService.Controller
+namespace UserApiService.Models
 {
     public class WeatherForecast
     {

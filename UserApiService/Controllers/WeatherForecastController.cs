@@ -8,8 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserApiService.Models;
 using UserApiService.Services;
-namespace UserApiService.Controller
+
+namespace UserApiService.Controllers
 {
     [Authorize]
     [ApiController]

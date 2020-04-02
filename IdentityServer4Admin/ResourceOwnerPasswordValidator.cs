@@ -26,7 +26,7 @@ namespace IdentityServer4Admin
                     subject: userName,
                     authenticationMethod: "custom",
                     claims: claimList.ToArray(),
-                    identityProvider:"Jack",
+                    //identityProvider:"Jack",
                     customResponse: CustomResponse()
                  );
             }
